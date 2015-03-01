@@ -42,10 +42,13 @@ import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.PhoneStatusBar;
 
 import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import libcore.icu.LocaleData;
 
@@ -82,6 +85,7 @@ public class Clock extends TextView implements DemoMode {
     protected int mClockStyle = STYLE_CLOCK_RIGHT;
     protected boolean mShowClock;
     private int mClockAndDateWidth;
+    protected boolean mShowClockSeconds = false;
 
     private int mAmPmStyle;
 
@@ -116,6 +120,9 @@ public class Clock extends TextView implements DemoMode {
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.STATUSBAR_CLOCK_DATE_FORMAT), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.CLOCK_USE_SECOND), false,
+                    mSettingsObserver);
             updateSettings();
         }
 
@@ -124,6 +131,9 @@ public class Clock extends TextView implements DemoMode {
             updateSettings();
         }
     }
+
+    private final Handler handler = new Handler();
+    TimerTask second;
 
     public Clock(Context context) {
         this(context, null);
@@ -266,12 +276,18 @@ public class Clock extends TextView implements DemoMode {
 
         String result = sdf.format(mCalendar.getTime());
 
+        mShowClockSeconds = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CLOCK_USE_SECOND, 0) == 1;
+        if (mShowClockSeconds) {
+            String temp = result;
+            result = String.format("%s:%02d", temp, new GregorianCalendar().get(Calendar.SECOND));
+        }
+
         if (mClockDateDisplay != CLOCK_DATE_DISPLAY_GONE) {
             Date now = new Date();
 
             String clockDateFormat = Settings.System.getString(getContext().getContentResolver(),
                     Settings.System.STATUSBAR_CLOCK_DATE_FORMAT);
-
             if (clockDateFormat == null || clockDateFormat.isEmpty()) {
                 // Set dateString to short uppercase Weekday (Default for AOKP) if empty
                 dateString = DateFormat.format("EEE", now) + " ";
@@ -356,6 +372,28 @@ public class Clock extends TextView implements DemoMode {
         if (clockColor == Integer.MIN_VALUE) {
             // flag to reset the color
             clockColor = defaultColor;
+        }
+
+        mShowClockSeconds = Settings.System.getIntForUser(resolver,
+                Settings.System.CLOCK_USE_SECOND, 0,
+                UserHandle.USER_CURRENT) == 1;
+
+        if (mShowClockSeconds) {
+            second = new TimerTask()
+            {
+                @Override
+                public void run() {
+                    Runnable updater = new Runnable()
+                        {
+                            public void run() {
+                                updateClock();
+                            }
+                        };
+                    handler.post(updater);
+                }
+            };
+            Timer timer = new Timer();
+            timer.schedule(second, 0, 1001);
         }
 
         if (mAttached) {
