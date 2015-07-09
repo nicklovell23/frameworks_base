@@ -505,7 +505,7 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
         }
 
         if (clickAction.startsWith("**")) {
-            v.setScaleType(KeyButtonView.ScaleType.CENTER);
+            v.setScaleType(KeyButtonView.ScaleType.CENTER_INSIDE);
         }
 
         boolean colorize = true;
@@ -534,7 +534,7 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
             if (colorize && mNavBarButtonColorMode != 3) {
                 d = ColorHelper.getColoredDrawable(d, mNavBarButtonColor);
             }
-            v.setImageDrawable(d);
+            v.setImageBitmap(ColorHelper.drawableToBitmap(d));
         }
         v.setRippleColor(mRippleColor);
         return v;
@@ -545,7 +545,7 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
         KeyButtonView v = new KeyButtonView(mContext, null);
         int width = mContext.getResources().getDimensionPixelSize(R.dimen.navigation_extra_key_width);
         v.setLayoutParams(getLayoutParams(landscape, width));
-        v.setScaleType(KeyButtonView.ScaleType.CENTER);
+        v.setScaleType(KeyButtonView.ScaleType.CENTER_INSIDE);
         if (keyId == KEY_MENU_LEFT || keyId == KEY_MENU_RIGHT) {
             v.setClickAction(ActionConstants.ACTION_MENU);
             v.setLongpressAction(ActionConstants.ACTION_NULL);
@@ -582,10 +582,8 @@ public class NavigationBarView extends LinearLayout implements BaseStatusBar.Nav
             } else {
                 d = ColorHelper.getColoredDrawable(d, mNavBarButtonColor);
             }
-            v.setImageDrawable(d);
-        } else {
-            v.setImageDrawable(d);
         }
+        v.setImageBitmap(ColorHelper.drawableToBitmap(d));
         v.setRippleColor(mRippleColor);
 
         return v;

@@ -129,4 +129,11 @@
     <string name="pie_phone_status_airplane_mode">Airplane mode on</string>
     <string name="pie_phone_status_emergency_only">Emergency calls only</string>
 
+    <!-- QS Tiles -->
+    <string name="quick_settings_sync">Sync</string>
+    <string name="quick_settings_sync_off">Sync off</string>
+
+    <!-- Smart PullDown Warning -->
+    <string name="smart_pulldown_disabled">Smart pulldown is disabled</string>
+
 </resources>
