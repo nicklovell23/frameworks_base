@@ -6781,7 +6781,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     mBootMsgDialog.show();
                 }
                 mBootMsgDialog.setMessage("Powered By SaberMod Optimizations\n\n" + msg
-                + "\n\nSlimRemix Roms By Zion959");
+                + "\n\nSlimRemix Lollipop 5.1.1_R6");
             }
         });
     }
