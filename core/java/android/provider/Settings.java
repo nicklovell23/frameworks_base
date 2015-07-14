@@ -6660,6 +6660,12 @@ public final class Settings {
         public static final String QS_USE_FOUR_COLUMNS = "qs_use_four_columns";
 
         /**
+         * Enable launch actions for left/right lockscreen targets
+         * @hide
+         */
+        public static final String LOCKSCREEN_BOTTOM_SHORTCUTS = "lockscreen_bottom_shortcuts";
+
+        /**
          * Stored color matrix for LiveDisplay. This is used to allow co-existence with
          * display tuning done by DisplayAdjustmentUtils when hardware support isn't
          * available.
