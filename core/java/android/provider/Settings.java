@@ -4179,6 +4179,12 @@ public final class Settings {
         public static final String APP_CIRCLE_BAR_SHOW_TRIGGER = "app_circle_bar_show_trigger";
 
         /**
+		 * Status bar greeting
+		 * @hide
+		 */
+		public static final String STATUS_BAR_GREETING = "status_bar_greeting";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
