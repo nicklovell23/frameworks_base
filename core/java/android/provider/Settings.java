@@ -4222,6 +4222,14 @@ public final class Settings {
         public static final String ENABLE_TASK_MANAGER = "enable_task_manager";
 
         /**
+         * Show icon when stylus is used?
+         * 0 = no
+         * 1 = yes
+         * @hide
+         */
+        public static final String STYLUS_ICON_ENABLED = "stylus_icon_enabled";
+
+        /**
          * Enable Stylus Gestures
          *
          * @hide
