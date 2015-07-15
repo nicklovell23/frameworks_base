@@ -40,4 +40,9 @@
     <!-- stylus gestures support -->
     <string name="stylus_app_not_installed">%s is not installed</string>
 
+    <!-- Power key as camera shutter -->
+    <string name="permlab_preventpower">override power key</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_preventpower">Allows an app to override the power key.</string>
+
 </resources>
