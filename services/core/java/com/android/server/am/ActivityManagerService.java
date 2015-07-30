@@ -10648,9 +10648,15 @@ public final class ActivityManagerService extends ActivityManagerNative
                     return true;
                 }
             }
+            final int anrPid = proc.pid;
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
+                    if (anrPid != proc.pid) {
+                        Slog.i(TAG, "Ignoring stale ANR (occurred in " + anrPid +
+                                    ", but current pid is " + proc.pid + ")");
+                        return;
+                    }
                     appNotResponding(proc, activity, parent, aboveSystem, annotation);
                 }
             });
@@ -12506,6 +12512,9 @@ public final class ActivityManagerService extends ActivityManagerNative
             for (int i=mLruProcesses.size()-1; i>=0; i--) {
                 ProcessRecord app = mLruProcesses.get(i);
                 if (!allUsers && app.userId != userId) {
+                    continue;
+                }
+                if (app.processName.equals("system")) {
                     continue;
                 }
                 if ((app.thread != null) && (!app.crashing && !app.notResponding)) {
