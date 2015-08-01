@@ -35,4 +35,9 @@
     <!-- Zen mode: No interruptions title, with a warning about alarms. [CHAR LIMIT=60] -->
     <string name="zen_silent_with_warning">No interruptions, except alarms.</string>
 
+    <!-- Development shortcuts -->
+    <string name="advanced_dev_option_wipe_app">Wipe app data</string>
+    <string name="advanced_dev_option_force_stop">Force stop</string>
+    <string name="advanced_dev_option_uninstall">Uninstall</string>
+
 </resources>
