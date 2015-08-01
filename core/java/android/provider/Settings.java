@@ -4381,6 +4381,12 @@ public final class Settings {
          */
         public static final String GESTURES_UP_SWIPE = "gestures_up_swipe";
 
+         /**
+         * Whether to dismiss all recents tasks
+         * @hide
+         */
+        public static final String RECENTS_CLEAR_ALL_DISMISS_ALL = "recents_clear_all_dismiss_all";
+
         /**
          * down Swipe Action
          *
