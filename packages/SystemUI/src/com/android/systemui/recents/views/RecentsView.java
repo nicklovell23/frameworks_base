@@ -359,7 +359,17 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                     Settings.System.RECENTS_CLEAR_ALL_LOCATION, Constants.DebugFlags.App.RECENTS_CLEAR_ALL_BOTTOM_RIGHT);
             FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)
                     mFloatingButton.getLayoutParams();
-            params.topMargin = taskStackBounds.top;
+            boolean isLandscape = mContext.getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+            if (mSearchBar == null || isLandscape) {
+                params.topMargin = mContext.getResources().
+                    getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height);
+            } else {
+                params.topMargin = mContext.getResources().
+                    getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height)
+                        + searchBarSpaceBounds.height();
+            }
+
             if (mSearchBar != null && (searchBarSpaceBounds.width() > taskViewWidth)) {
                 // Adjust to the search bar
                 params.rightMargin = width - searchBarSpaceBounds.right;
@@ -371,6 +381,7 @@ public class RecentsView extends FrameLayout implements TaskStackView.TaskStackV
                 if (params.rightMargin < mClearRecents.getWidth())
                     params.rightMargin = width - taskStackBounds.right;
             }
+
             switch (clearRecentsLocation) {
                 case Constants.DebugFlags.App.RECENTS_CLEAR_ALL_TOP_LEFT:
                     params.gravity = Gravity.TOP | Gravity.LEFT;
