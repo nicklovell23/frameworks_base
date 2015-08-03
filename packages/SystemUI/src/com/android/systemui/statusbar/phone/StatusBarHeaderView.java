@@ -157,14 +157,10 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
     private SettingsObserver mSettingsObserver;
     private boolean mShowWeather;
 
-    protected Vibrator mVibrator;
-
     public StatusBarHeaderView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
         loadShowBatteryTextSetting();
 
-        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     private void loadShowBatteryTextSetting() {
@@ -627,20 +623,12 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         });
     }
 
-    public void vibrate (int duration) {
-        if (mVibrator != null) {
-            if (mVibrator.hasVibrator()) { mVibrator.vibrate(duration); }
-        }
-    }
-
     @Override
     public void onClick(View v) {
         if (v == mSettingsButton) {
             startSettingsActivity();
-            vibrate(20);
         } else if (v == mSystemIconsSuperContainer) {
             startBatteryActivity();
-            vibrate(20);
         } else if (v == mAlarmStatus && mNextAlarm != null) {
             PendingIntent showIntent = mNextAlarm.getShowIntent();
             if (showIntent != null && showIntent.isActivity()) {
@@ -648,14 +636,12 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             }
         } else if (v == mClock) {
             startClockActivity();
-            vibrate(20);
         } else if (v == mDateGroup) {
             startDateActivity();
-            vibrate(20);
         } else if (v == mWeatherContainer) {
             startForecastActivity();
-            vibrate(20);
         }
+        mQSPanel.vibrateTile(20);
     }
 
     @Override
